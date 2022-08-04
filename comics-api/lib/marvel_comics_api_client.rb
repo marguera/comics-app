@@ -5,7 +5,7 @@ class MarvelComicsApiClient
     def get_comics
       url = self.authenticated_endpoint_for(path: "comics", timestamp: Time.now.to_i)
       response = RestClient.get(url)
-      JSON.parse(response.body)
+      JSON.parse(response.body, symbolize_names: true)
     end
 
     def authenticated_endpoint_for(path:, timestamp:)
