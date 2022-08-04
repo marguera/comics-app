@@ -1,0 +1,14 @@
+FROM node:14-alpine
+
+ENV APP_PATH /var/app
+ENV REACT_PORT 3000
+
+WORKDIR $APP_PATH
+
+COPY package*.json ./
+
+RUN npm install
+
+EXPOSE $REACT_PORT
+
+CMD ["npm", "start"]

@@ -1,0 +1,55 @@
+version: '3'
+volumes:
+  node_modules_cache:
+  gem_cache:
+services:
+  nginx:
+    depends_on:
+      - comics-api
+      - comics-client
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - internal
+
+  comics-client:
+    build:
+      context: comics-client
+      dockerfile: Dockerfile.dev
+    container_name: comics_client
+    volumes:
+      - ./comics-client:/var/app
+      - node_modules_cache:/var/app/node_modules
+    ports:
+      - 3100:3100
+    networks:
+      - internal
+    environment:
+      PORT: 3100
+    stdin_open: true
+    command: ['npm', 'run', 'start']
+
+  comics-api:
+    build:
+      context: comics-api
+      dockerfile: Dockerfile.dev
+    container_name: comics_api
+    volumes:
+      - ./comics-api:/var/app
+      - gem_cache:/usr/local/bundle/gems
+    ports:
+      - 3200:3200
+    networks:
+      - internal
+    stdin_open: true
+    tty: true
+    entrypoint: /usr/local/bin/docker-entrypoint.sh
+    command: ['rails', 'server', '-p', '3200', '-b', '0.0.0.0']
+    environment:
+      RAILS_ENV: development
+networks:
+  internal:
+    driver: bridge
