@@ -46,6 +46,7 @@ services:
       - internal
     stdin_open: true
     tty: true
+    env_file: ./comics-api/.env.development
     entrypoint: /usr/local/bin/docker-entrypoint.sh
     command: ['rails', 'server', '-p', '3200', '-b', '0.0.0.0']
     environment:
