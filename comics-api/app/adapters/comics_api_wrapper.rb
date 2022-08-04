@@ -1,4 +1,4 @@
-class MarvelComicsApiClient 
+class ComicsApiWrapper
   BASE_ENDPOINT = "http://gateway.marvel.com/v1/public"
 
   class << self

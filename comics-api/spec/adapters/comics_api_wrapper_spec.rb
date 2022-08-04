@@ -1,9 +1,8 @@
 require 'rails_helper'
-require 'marvel_comics_api_client'
 
-RSpec.describe "MarvelComicsApiClient", :vcr do
+RSpec.describe "ComicsApiWrapper", :vcr do
   describe "GET /comics" do
-    let (:comics_response) { MarvelComicsApiClient.get_comics() }
+    let (:comics_response) { ComicsApiWrapper.get_comics() }
     it "returns correct data" do
       expect(comics_response[:code]).to eq(200)
       expect(comics_response).to have_key(:data)
