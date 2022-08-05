@@ -1,17 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe "ComicsApiWrapper", :vcr do
-  describe "GET /comics" do
-    let (:comics_response) { ComicsApiWrapper.get_comics() }
-    it "returns correct data" do
-      expect(comics_response[:code]).to eq(200)
-      expect(comics_response).to have_key(:data)
-      expect(comics_response[:data]).to have_key(:results)
-      expect(comics_response[:data]).to have_key(:results)
-      expect(comics_response[:data][:results]).to be_an(Array)
-      expect(comics_response[:data][:results][0]).to have_key(:id)
-      expect(comics_response[:data][:results][0]).to have_key(:title)
-      expect(comics_response[:data][:results][0]).to have_key(:thumbnail)
+RSpec.describe "ComicsApiWrapper" do
+  describe "find comics" do
+    let(:rest_client) { spy }
+    let(:api) {
+      ComicsApiWrapper.new(rest_client, 
+        url: "u",
+        public_key: "pu",
+        private_key: "pr",
+        timestamp: "t"
+      )
+    }
+    let(:response) { double("response", body: :json) }
+
+    it "appends the auth parameters" do
+      expect(rest_client).to receive(:get).with("u/comics?ts=&apikey=pu&hash=0dea849e9fe91b89b411440f4cc0ae0f")
+      api.find
+    end
+
+    it "returns json" do
+      allow(rest_client).to receive(:get).and_return(response)
+      expect(api.find).to eq(:json)
     end
   end
 end

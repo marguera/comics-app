@@ -1,17 +1,25 @@
 class ComicsApiWrapper
-  BASE_ENDPOINT = "http://gateway.marvel.com/v1/public"
 
-  class << self
-    def get_comics
-      url = self.authenticated_endpoint_for(path: "comics", timestamp: Time.now.to_i)
-      response = RestClient.get(url)
-      JSON.parse(response.body, symbolize_names: true)
-    end
+  def initialize rest_client, url:, public_key:, private_key:, timestamp:
+    @rest_client = rest_client
+    @url         = url
+    @public_key  = public_key
+    @private_key = timestamp
+  end
 
-    def authenticated_endpoint_for(path:, timestamp:)
-      key  = ENV['MARVEL_PUBLIC_KEY']
-      hash = Digest::MD5.hexdigest("#{timestamp}#{ENV['MARVEL_PRIVATE_KEY']}#{key}")
-      "#{BASE_ENDPOINT}/#{path}?ts=#{timestamp}&apikey=#{key}&hash=#{hash}"
-    end
+  def find
+    url = authenticated_endpoint_for(path: "comics")
+    response = @rest_client.get(url)
+    response.body
+  end
+
+  private
+
+  def authenticated_endpoint_for(path:)
+    "#{@url}/#{path}?ts=#{@timestamp}&apikey=#{@public_key}&hash=#{md5_hash}"
+  end
+
+  def md5_hash
+    Digest::MD5.hexdigest("#{@timestamp}#{@private_key}#{@public_key}")
   end
 end
