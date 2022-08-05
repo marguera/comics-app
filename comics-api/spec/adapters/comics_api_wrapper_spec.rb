@@ -5,16 +5,16 @@ RSpec.describe "ComicsApiWrapper" do
     let(:rest_client) { spy }
     let(:api) {
       ComicsApiWrapper.new(rest_client, 
-        url: "u",
-        public_key: "pu",
-        private_key: "pr",
-        timestamp: "t"
+        url: "1",
+        public_key: "2",
+        private_key: "3",
+        timestamp: "4"
       )
     }
     let(:response) { double("response", body: :json) }
 
     it "appends the auth parameters" do
-      expect(rest_client).to receive(:get).with("u/comics?ts=&apikey=pu&hash=0dea849e9fe91b89b411440f4cc0ae0f")
+      expect(rest_client).to receive(:get).with("1/comics?ts=4&apikey=2&hash=248e844336797ec98478f85e7626de4a")
       api.find
     end
 

@@ -4,10 +4,12 @@ class ComicsApiWrapper
     @rest_client = rest_client
     @url         = url
     @public_key  = public_key
-    @private_key = timestamp
+    @private_key = private_key
+    @timestamp   = timestamp
   end
 
   def find
+    puts authenticated_endpoint_for(path: "comics")
     url = authenticated_endpoint_for(path: "comics")
     response = @rest_client.get(url)
     response.body
