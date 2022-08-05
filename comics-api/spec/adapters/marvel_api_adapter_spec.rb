@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "MarvelApiAdapter" do
 
-  describe "find comics" do
+  describe "#find_comics" do
 
     let(:api) { MarvelApiAdapter.new }
 
@@ -10,7 +10,7 @@ RSpec.describe "MarvelApiAdapter" do
       { ts: '1', 
         apikey: '123', 
         hash: '41166ef71feca5c492e2dad09f42e685' }
-      }
+    }
 
     before do
       api.instance_variable_set(:@public_key, "123")
@@ -28,6 +28,13 @@ RSpec.describe "MarvelApiAdapter" do
         api.find_comics
         expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
           .with(query: auth)).to have_been_made 
+      end
+
+      it "appends the search params" do
+        search_params = { character: [1,2,3] }
+        api.find_comics(search_params)
+        expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
+          .with(query: auth.merge(search_params ))).to have_been_made 
       end
 
       it "returns the response string" do
