@@ -4,13 +4,7 @@ RSpec.describe "ComicsApiWrapper" do
 
   describe "find comics" do
 
-    let(:api) {
-      ComicsApiWrapper.new(
-        public_key: "123",
-        private_key: "456",
-        timestamp: 1,
-      )
-    }
+    let(:api) { comics_api_wrapper }
 
     let(:auth) {
       { ts: '1', 

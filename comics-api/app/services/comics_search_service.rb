@@ -1,7 +1,7 @@
 class ComicsSearchService
 
   def find
-    comics = get_comics
+    comics = parse_comics(get_comics)
     comics = enhance_comics_with_likes(comics)
     comics.map { |comic| Comic.from_json(comic) }
   end
@@ -17,8 +17,14 @@ class ComicsSearchService
     end
     
     def get_comics
-      results = JSON.parse(comics_api.find()).deep_symbolize_keys
-      results[:data][:results]
+      Rails.cache.fetch("comics_api:find", expires_in: 24.hours) do
+        comics_api.find()
+      end
+    end
+
+    def parse_comics(json)
+      result = JSON.parse(json).deep_symbolize_keys
+      result[:data][:results]
     end
 
     def enhance_comics_with_likes(comics)
