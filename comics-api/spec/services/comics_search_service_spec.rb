@@ -7,11 +7,10 @@ RSpec.describe "ComicsSearchService" do
     let(:rest_client) { spy }
 
     let(:api) {
-      ComicsApiWrapper.new(rest_client, 
-        url: "u",
-        public_key: "pu",
-        private_key: "pr",
-        timestamp: "t"
+      ComicsApiWrapper.new(
+        public_key: "123",
+        private_key: "456",
+        timestamp: 1,
       )
     }
 
@@ -42,7 +41,7 @@ RSpec.describe "ComicsSearchService" do
     it "returns comics" do
       service = ComicsSearchService.new
       expect(service.find).to be_a(Array)
-      
+
       comic = service.find[0]
       expect(comic).to respond_to(:id)
       expect(comic).to respond_to(:title)
@@ -50,10 +49,5 @@ RSpec.describe "ComicsSearchService" do
       expect(comic).to respond_to(:likes)
       expect(comic.likes).to eq(1)
     end
-
-    # TODO
-    # randomize mocks attributes
-
-
   end
 end

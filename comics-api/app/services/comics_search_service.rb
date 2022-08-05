@@ -14,8 +14,7 @@ class ComicsSearchService
     end
 
     def comics_api
-      @comics_api ||= ComicsApiWrapper.new(RestClient, 
-        url: ENV['MARVEL_URL'],
+      @comics_api ||= ComicsApiWrapper.new(
         public_key: ENV['MARVEL_PUBLIC_KEY'],
         private_key: ENV['MARVEL_PRIVATE_KEY'],
         timestamp: Time.zone.now.to_i

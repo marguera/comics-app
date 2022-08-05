@@ -1,24 +1,24 @@
 class ComicsApiWrapper
-
-  def initialize rest_client, url:, public_key:, private_key:, timestamp:
-    @rest_client = rest_client
-    @url         = url
+  ENDPOINT = "http://gateway.marvel.com/v1/public/comics"
+  
+  def initialize(public_key:, private_key:, timestamp:)
     @public_key  = public_key
     @private_key = private_key
     @timestamp   = timestamp
   end
 
   def find
-    puts authenticated_endpoint_for(path: "comics")
-    url = authenticated_endpoint_for(path: "comics")
-    response = @rest_client.get(url)
-    response.body
+    request.body
   end
-
+ 
   private
 
-  def authenticated_endpoint_for(path:)
-    "#{@url}/#{path}?ts=#{@timestamp}&apikey=#{@public_key}&hash=#{md5_hash}"
+  def request
+    RestClient.get("#{ENDPOINT}", { params: auth })
+  end
+
+  def auth
+    { ts: @timestamp, apikey: @public_key, hash: md5_hash }
   end
 
   def md5_hash

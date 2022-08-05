@@ -1,26 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe "ComicsApiWrapper" do
+
   describe "find comics" do
-    let(:rest_client) { spy }
     let(:api) {
-      ComicsApiWrapper.new(rest_client, 
-        url: "1",
-        public_key: "2",
-        private_key: "3",
-        timestamp: "4"
+      ComicsApiWrapper.new(
+        public_key: "123",
+        private_key: "456",
+        timestamp: 1,
       )
     }
-    let(:response) { double("response", body: :json) }
-
-    it "appends the auth parameters" do
-      expect(rest_client).to receive(:get).with("1/comics?ts=4&apikey=2&hash=248e844336797ec98478f85e7626de4a")
-      api.find
+   
+    before do
+      stub_request(:get, /#{ComicsApiWrapper::ENDPOINT}/)
+        .to_return({ body: '{"a":"b"}' })
     end
 
-    it "returns json" do
-      allow(rest_client).to receive(:get).and_return(response)
-      expect(api.find).to eq(:json)
+    it "appends the auth parameters" do
+      api.find
+      expect(a_request(:get, ComicsApiWrapper::ENDPOINT)
+        .with(query: { 
+          ts: '1', 
+          apikey: '123', 
+          hash: '41166ef71feca5c492e2dad09f42e685' 
+        })).to have_been_made 
+    end
+
+    it "returns the response string" do
+      response = api.find
+      expect(response).to be_a(String)
+      expect(response).to eq('{"a":"b"}')
     end
   end
 end
