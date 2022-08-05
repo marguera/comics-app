@@ -7,11 +7,6 @@ class ComicsSearchService
   end
 
   private
-    
-    def get_comics
-      results = JSON.parse(comics_api.find()).deep_symbolize_keys
-      results[:data][:results]
-    end
 
     def comics_api
       @comics_api ||= ComicsApiWrapper.new(
@@ -20,14 +15,21 @@ class ComicsSearchService
         timestamp: Time.zone.now.to_i
       )
     end
+    
+    def get_comics
+      results = JSON.parse(comics_api.find()).deep_symbolize_keys
+      results[:data][:results]
+    end
 
     def enhance_comics_with_likes(comics)
-      likes = Like.from_comics_ids(
-        comics_ids: comics.map { |comic| comic[:id] } 
-      )
+      likes = get_likes(comics.map { |comic| comic[:id] })
       comics.map do |comic| 
-        like = likes.find { |like| like.comic_id.to_s === comic[:id].to_s }
-        comic.merge({ likes: like&.count || 0 })
+        comic.merge({ likes: likes[comic[:id].to_s] || 0 })
       end
+    end
+
+    def get_likes(comics_ids)
+      Like.from_comics_ids(comics_ids: comics_ids)
+        .map{ |like| [like.comic_id, like.count] }.to_h
     end
 end
