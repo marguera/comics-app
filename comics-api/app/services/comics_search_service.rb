@@ -9,7 +9,7 @@ class ComicsSearchService
   private
 
     def comics_api
-      @comics_api ||= ComicsApiWrapper.new(
+      @comics_api ||= MarvelApiAdapter.new(
         public_key: ENV['MARVEL_PUBLIC_KEY'],
         private_key: ENV['MARVEL_PRIVATE_KEY'],
         timestamp: Time.zone.now.to_i

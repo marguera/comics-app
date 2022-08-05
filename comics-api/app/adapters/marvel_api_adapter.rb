@@ -1,4 +1,4 @@
-class ComicsApiWrapper
+class MarvelApiAdapter
   ENDPOINT = "http://gateway.marvel.com/v1/public/comics"
   
   def initialize(public_key:, private_key:, timestamp:)

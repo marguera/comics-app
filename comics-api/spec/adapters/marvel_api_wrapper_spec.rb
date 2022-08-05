@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "ComicsApiWrapper" do
+RSpec.describe "MarvelApiAdapter" do
 
   describe "find comics" do
 
@@ -14,13 +14,13 @@ RSpec.describe "ComicsApiWrapper" do
 
     context "with successfull request" do
       before do
-        stub_request(:get, /#{ComicsApiWrapper::ENDPOINT}/)
+        stub_request(:get, /#{MarvelApiAdapter::ENDPOINT}/)
           .to_return({ body: '{"a":"b"}' })
       end
 
       it "appends the auth parameters" do
         api.find
-        expect(a_request(:get, ComicsApiWrapper::ENDPOINT)
+        expect(a_request(:get, MarvelApiAdapter::ENDPOINT)
           .with(query: auth)).to have_been_made 
       end
 
@@ -32,7 +32,7 @@ RSpec.describe "ComicsApiWrapper" do
     
     context "with invalid request" do
       before do
-        stub_request(:get, /#{ComicsApiWrapper::ENDPOINT}/)
+        stub_request(:get, /#{MarvelApiAdapter::ENDPOINT}/)
           .to_raise("request error")
       end
 

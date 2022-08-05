@@ -40,7 +40,7 @@ def comics_api_response_json
 end
 
 def comics_api_wrapper
-  ComicsApiWrapper.new(
+  MarvelApiAdapter.new(
     public_key: "123",
     private_key: "456",
     timestamp: 1,
