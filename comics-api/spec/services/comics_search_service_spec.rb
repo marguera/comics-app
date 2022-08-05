@@ -42,35 +42,18 @@ RSpec.describe "ComicsSearchService" do
     it "returns comics" do
       service = ComicsSearchService.new
       expect(service.find).to be_a(Array)
-      expect(service.find[0]).to respond_to(:id)
-      expect(service.find[0]).to respond_to(:title)
-      expect(service.find[0]).to respond_to(:thumbnail)
-      expect(service.find[0]).to respond_to(:likes)
+      
+      comic = service.find[0]
+      expect(comic).to respond_to(:id)
+      expect(comic).to respond_to(:title)
+      expect(comic).to respond_to(:thumbnail)
+      expect(comic).to respond_to(:likes)
+      expect(comic.likes).to eq(1)
     end
 
-    # let(:comics) {
-    #   [
-    #     {
-    #       id: 1,
-    #       title: "Superman",
-    #       thumbnail: { 
-    #         path: "image_path",
-    #         extension: "image_extension"
-    #        }
-    #     }
-    #   ]
-    # }
-    # it "returns the list of comics" do
-    #   service = ComicsSearchService.new(adapter)
-    #   results = service.find
-    #   comic = comics[0]
-    #   expect(LikesRepository).to receive(:get_likes) { comics }
-    #   expect(ComicsRepository).to receive(:get_comics) { comics }
-    #   expect(adapter).to receive(:get_comics)
-    #   expect(results).to be_a(Array)
-    #   expect(results[0][:id]).to eq(comic[:id])
-    #   expect(results[0][:title]).to eq(comic[:title])
-    #   expect(results[0][:thumbnail]).to eq("#{comic[:thumbnail][:path]}.#{comic[:thumbnail][:extension]}")
-    # end
+    # TODO
+    # randomize mocks attributes
+
+
   end
 end

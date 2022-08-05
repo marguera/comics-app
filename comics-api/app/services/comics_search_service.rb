@@ -24,9 +24,11 @@ class ComicsSearchService
 
     def enhance_comics_with_likes(comics)
       likes = Like.from_comics_ids(
-        comics_ids: comics.map { |comic| comic[:id] } )
+        comics_ids: comics.map { |comic| comic[:id] } 
+      )
       comics.map do |comic| 
-        comic.merge({ like: likes[comic[:id]] })
+        like = likes.find { |like| like.comic_id.to_s === comic[:id].to_s }
+        comic.merge({ likes: like&.count || 0 })
       end
     end
 end
