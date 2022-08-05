@@ -4,7 +4,7 @@ RSpec.describe "Comics", type: :request do
   describe "GET /index" do
     context 'without parameters' do
 
-      it 'returns a 200 response with comics' do
+      it 'returns a 200 response with comics', :vcr do
         get '/v1/comics'
         expect(response).to have_http_status(:success)
         expect(response.content_type).to eq("application/json; charset=utf-8")
