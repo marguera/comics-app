@@ -5,7 +5,7 @@ class Comic
     self.new(
       json[:id], 
       json[:title], 
-      json[:thumbnail][:path] + '.' + json[:thumbnail][:extension], 
+      json[:thumbnail], 
       json[:likes] )
   end
 

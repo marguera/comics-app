@@ -1,20 +1,24 @@
 class MarvelApiAdapter
   ENDPOINT = "http://gateway.marvel.com/v1/public"
   
-  def initialize(public_key:, private_key:, timestamp:)
-    @public_key  = public_key
-    @private_key = private_key
-    @timestamp   = timestamp
+  def initialize
+    @public_key  = ENV['MARVEL_PUBLIC_KEY']
+    @private_key = ENV['MARVEL_PRIVATE_KEY']
+    @timestamp   = Time.zone.now.to_i
   end
 
-  def find_comics
-    request('/comics').body
+  def configure
+    yield self
   end
- 
+
+  def find_comics(options={})
+    request('/comics', options).body
+  end
+
   private
 
-  def request(path)
-    RestClient.get("#{ENDPOINT}#{path}", { params: auth })
+  def request(path, options={})
+    RestClient.get("#{ENDPOINT}#{path}", { params: auth.merge(options) })
   end
 
   def auth

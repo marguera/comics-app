@@ -4,13 +4,19 @@ RSpec.describe "MarvelApiAdapter" do
 
   describe "find comics" do
 
-    let(:api) { marvel_api_adapter }
+    let(:api) { MarvelApiAdapter.new }
 
     let(:auth) {
       { ts: '1', 
         apikey: '123', 
         hash: '41166ef71feca5c492e2dad09f42e685' }
-    }
+      }
+
+    before do
+      api.instance_variable_set(:@public_key, "123")
+      api.instance_variable_set(:@private_key, "456")
+      api.instance_variable_set(:@timestamp, 1)
+    end
 
     context "with successfull request" do
       before do

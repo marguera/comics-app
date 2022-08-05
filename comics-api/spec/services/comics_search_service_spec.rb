@@ -1,52 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe "ComicsSearchService" do
-
-  describe "find comics" do
-
+  describe "#search_comics" do
     let(:service) { ComicsSearchService.new }
-    
-    let(:api) { marvel_api_adapter }
-
-    let(:api_response) { comics_api_response_json }
-
-    let(:likes) { 
-      (1..10).map { |i| Like.create( comic_id: i, count: 1 ) }
+    let(:api_response) { 
+      { 
+        data: {
+          results: [
+            { id: 1, title: "title 1", thumbnail: { path: "p1", extension: "e1" } },
+            { id: 2, title: "title 2", thumbnail: { path: "p1", extension: "e1" } },
+            { id: 3, title: "title 3", thumbnail: { path: "p1", extension: "e1" } },
+            { id: 4, title: "title 4", thumbnail: { path: "p1", extension: "e1" } },
+            { id: 5, title: "title 5", thumbnail: { path: "p1", extension: "e1" } }
+          ]
+        }
+      }.to_json 
     }
 
     before do 
-      allow(service).to receive(:marvel_api).and_return(api)
-      allow(service).to receive(:get_likes).with(anything).and_return(likes)
+      Rails.cache.clear
     end
 
-    context "skip caching" do
-      before do 
-        allow(service).to receive(:get_comics).and_return(api_response)
-      end
-
-      it "returns comics" do
-        comics = service.find
-        expect(comics).to be_a(Array)
-        expect(comics.first).to respond_to(:id)
-        expect(comics.first).to respond_to(:title)
-        expect(comics.first).to respond_to(:thumbnail)
-        expect(comics.first).to respond_to(:likes)
-        expect(comics.first.likes).to eq(1)
-      end
-    end
-
-    context "with caching" do
-
-      before do 
-        Rails.cache.clear
-        allow(api).to receive(:find_comics).and_return(api_response)
-      end
-
-      it "should cache the comic's api request" do
-        expect(api).to receive(:find_comics).once
-        service.find
-        service.find
-      end
+    it "should cache the comic's api request" do
+      allow(service).to receive(:get_comics).and_return(api_response)
+      expect(service).to receive(:get_comics).once
+      service.search_comics
+      service.search_comics
     end
   end
 end
