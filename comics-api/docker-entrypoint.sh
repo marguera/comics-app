@@ -6,6 +6,8 @@ echo "Environment: $RAILS_ENV"
 
 bundle check || bundle install
 
+bundle exec rails db:migrate
+
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f $APP_PATH/tmp/pids/server.pid
 
