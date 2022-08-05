@@ -4,7 +4,7 @@ RSpec.describe "ComicsSearchService" do
 
   describe "find comics" do
 
-    let(:rest_client) { spy }
+    let(:service) { ComicsSearchService.new }
 
     let(:api) {
       ComicsApiWrapper.new(
@@ -15,7 +15,7 @@ RSpec.describe "ComicsSearchService" do
     }
 
     let(:likes) { 
-      (1..10).map { |i| Like.new( comic_id: i, count: 1 ) }
+      (1..10).map { |i| Like.create( comic_id: i, count: 1 ) }
     }
 
     let(:api_response) { 
@@ -33,21 +33,19 @@ RSpec.describe "ComicsSearchService" do
     }
 
     before do 
-      allow(ComicsApiWrapper).to receive(:new).and_return(api)
+      allow(service).to receive(:comics_api).and_return(api)
       allow(api).to receive(:find).and_return(api_response)
-      allow(Like).to receive(:from_comics_ids).and_return(likes)
+      allow(service).to receive(:get_likes).with(anything).and_return(likes)
     end
 
     it "returns comics" do
-      service = ComicsSearchService.new
-      expect(service.find).to be_a(Array)
-
-      comic = service.find[0]
-      expect(comic).to respond_to(:id)
-      expect(comic).to respond_to(:title)
-      expect(comic).to respond_to(:thumbnail)
-      expect(comic).to respond_to(:likes)
-      expect(comic.likes).to eq(1)
+      comics = service.find
+      expect(comics).to be_a(Array)
+      expect(comics.first).to respond_to(:id)
+      expect(comics.first).to respond_to(:title)
+      expect(comics.first).to respond_to(:thumbnail)
+      expect(comics.first).to respond_to(:likes)
+      expect(comics.first.likes).to eq(1)
     end
   end
 end
