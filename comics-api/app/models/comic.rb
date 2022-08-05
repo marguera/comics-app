@@ -2,7 +2,11 @@ class Comic
   attr_reader :id, :title, :thumbnail, :likes
   
   def self.from_json(json)
-    self.new(json[:id], json[:title], json[:thumbnail], json[:likes])
+    self.new(
+      json[:id], 
+      json[:title], 
+      json[:thumbnail][:path] + '.' + json[:thumbnail][:extension], 
+      json[:likes] )
   end
 
   private
