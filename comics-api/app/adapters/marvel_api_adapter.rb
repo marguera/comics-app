@@ -1,5 +1,5 @@
 class MarvelApiAdapter
-  ENDPOINT = "http://gateway.marvel.com/v1/public/comics"
+  ENDPOINT = "http://gateway.marvel.com/v1/public"
   
   def initialize(public_key:, private_key:, timestamp:)
     @public_key  = public_key
@@ -7,14 +7,14 @@ class MarvelApiAdapter
     @timestamp   = timestamp
   end
 
-  def find
-    request.body
+  def find_comics
+    request('/comics').body
   end
  
   private
 
-  def request
-    RestClient.get("#{ENDPOINT}", { params: auth })
+  def request(path)
+    RestClient.get("#{ENDPOINT}#{path}", { params: auth })
   end
 
   def auth

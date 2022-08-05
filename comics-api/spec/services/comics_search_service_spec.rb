@@ -6,7 +6,7 @@ RSpec.describe "ComicsSearchService" do
 
     let(:service) { ComicsSearchService.new }
     
-    let(:api) { comics_api_wrapper }
+    let(:api) { marvel_api_adapter }
 
     let(:api_response) { comics_api_response_json }
 
@@ -15,7 +15,7 @@ RSpec.describe "ComicsSearchService" do
     }
 
     before do 
-      allow(service).to receive(:comics_api).and_return(api)
+      allow(service).to receive(:marvel_api).and_return(api)
       allow(service).to receive(:get_likes).with(anything).and_return(likes)
     end
 
@@ -39,11 +39,11 @@ RSpec.describe "ComicsSearchService" do
 
       before do 
         Rails.cache.clear
-        allow(api).to receive(:find).and_return(api_response)
+        allow(api).to receive(:find_comics).and_return(api_response)
       end
 
       it "should cache the comic's api request" do
-        expect(api).to receive(:find).once
+        expect(api).to receive(:find_comics).once
         service.find
         service.find
       end

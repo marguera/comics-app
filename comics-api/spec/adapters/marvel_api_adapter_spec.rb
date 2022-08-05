@@ -4,7 +4,7 @@ RSpec.describe "MarvelApiAdapter" do
 
   describe "find comics" do
 
-    let(:api) { comics_api_wrapper }
+    let(:api) { marvel_api_adapter }
 
     let(:auth) {
       { ts: '1', 
@@ -19,14 +19,14 @@ RSpec.describe "MarvelApiAdapter" do
       end
 
       it "appends the auth parameters" do
-        api.find
-        expect(a_request(:get, MarvelApiAdapter::ENDPOINT)
+        api.find_comics
+        expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
           .with(query: auth)).to have_been_made 
       end
 
       it "returns the response string" do
-        expect(api.find).to be_a(String)
-        expect(api.find).to eq('{"a":"b"}')
+        expect(api.find_comics).to be_a(String)
+        expect(api.find_comics).to eq('{"a":"b"}')
       end
     end
     
@@ -37,7 +37,7 @@ RSpec.describe "MarvelApiAdapter" do
       end
 
       it "raises an error" do
-        expect { api.find }.to raise_error("request error")
+        expect { api.find_comics }.to raise_error("request error")
       end
     end
   end

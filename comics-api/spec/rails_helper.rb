@@ -39,7 +39,7 @@ def comics_api_response_json
   }.to_json
 end
 
-def comics_api_wrapper
+def marvel_api_adapter
   MarvelApiAdapter.new(
     public_key: "123",
     private_key: "456",

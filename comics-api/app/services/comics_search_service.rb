@@ -8,8 +8,8 @@ class ComicsSearchService
 
   private
 
-    def comics_api
-      @comics_api ||= MarvelApiAdapter.new(
+    def marvel_api
+      @marvel_api ||= MarvelApiAdapter.new(
         public_key: ENV['MARVEL_PUBLIC_KEY'],
         private_key: ENV['MARVEL_PRIVATE_KEY'],
         timestamp: Time.zone.now.to_i
@@ -18,7 +18,7 @@ class ComicsSearchService
     
     def get_comics
       Rails.cache.fetch("comics_api:find", expires_in: 24.hours) do
-        comics_api.find()
+        marvel_api.find_comics()
       end
     end
 
