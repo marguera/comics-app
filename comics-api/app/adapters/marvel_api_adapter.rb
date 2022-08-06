@@ -12,13 +12,22 @@ class MarvelApiAdapter
   end
 
   def find_comics(options={})
-    request('/comics', options).body
+    res = request('/comics', options).body
+  end
+
+  def find_characters(options={})
+    res = request('/characters', options).body
   end
 
   private
 
+  def compact_blank(options)
+    options.clone.delete_if { |_,v| v.blank? }
+  end
+
   def request(path, options={})
-    RestClient.get("#{ENDPOINT}#{path}", { params: auth.merge(options) })
+    RestClient.get("#{ENDPOINT}#{path}", { 
+      params: auth.merge(compact_blank(options)) })
   end
 
   def auth
