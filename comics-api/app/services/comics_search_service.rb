@@ -5,24 +5,39 @@ class ComicsSearchService
   end
 
   def search_comics(options={})
-    comics = Rails.cache.fetch("comics_api:find", expires_in: 24.hours) do
-      get_comics(options)
-    end
-    parse_comics(comics)
+    characters_ids = parse_characters_ids({ name: options[:character] })
+    options = characters_ids.size > 0 ? { characters: characters_ids } : {}
+    comics = parse_comics(options)
   end
   
   private
 
     def get_comics(options)
-      @marvel_api.find_comics(options)
+      cache_key = "comics_api:search_comics?#{options.to_query}"
+      Rails.cache.fetch(cache_key, expires_in: 24.hours) do
+        @marvel_api.find_comics(options)
+      end
     end
 
-    def parse_comics(comics_json)
-      result = JSON.parse(comics_json).deep_symbolize_keys
+    def parse_comics(options)
+      result = JSON.parse(get_comics(options)).deep_symbolize_keys
       result[:data][:results].map{ |json| Comic.from_json({ 
         id:        json[:id],
         title:     json[:title],
         thumbnail: json[:thumbnail][:path] + '.' + json[:thumbnail][:extension]
       }) }
+    end
+
+    def get_characters(options)
+      cache_key = "comics_api:search_characters?#{options.to_query}"
+      Rails.cache.fetch(cache_key, expires_in: 24.hours ) do
+        @marvel_api.find_characters(options)
+      end
+    end
+
+    def parse_characters_ids(options)
+      return [] unless options[:name].present?
+      result = JSON.parse(get_characters(options)).deep_symbolize_keys
+      result[:data][:results].map{ |character| character[:id] }
     end
 end

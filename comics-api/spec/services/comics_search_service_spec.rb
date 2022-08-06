@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "ComicsSearchService" do
   describe "#search_comics" do
-    let(:service) { ComicsSearchService.new }
-    let(:api_response) { 
+    let(:api) { MarvelApiAdapter.new }
+    let(:service) { ComicsSearchService.new(marvel_api: api) }
+    let(:comics_response) { 
       { 
         data: {
           results: [
@@ -16,16 +17,55 @@ RSpec.describe "ComicsSearchService" do
         }
       }.to_json 
     }
+    let(:characters_response) { 
+      { 
+        data: {
+          results: [
+            { id: 1, name: "name 1" },
+            { id: 2, name: "name 2" }
+           ]
+        }
+      }.to_json 
+    }
 
     before do 
       Rails.cache.clear
+      allow(api).to receive(:find_comics).and_return(comics_response)
+      allow(api).to receive(:find_characters).and_return(characters_response)
     end
 
-    it "should cache the comic's api request" do
-      allow(service).to receive(:get_comics).and_return(api_response)
-      expect(service).to receive(:get_comics).once
+    it "should call find search with a list of characters" do
+      expect(api).to receive(:find_comics).with({ characters: [1,2] })
+      service.search_comics({ character: "spider-man" })
+    end
+    
+    it "should cache the comics search request" do
+      expect(api).to receive(:find_comics).once
       service.search_comics
       service.search_comics
     end
+
+    it "should cache the characters search request" do
+      expect(api).to receive(:find_comics).once
+      expect(api).to receive(:find_characters).once
+      service.search_comics({ character: "spider-man" })
+      service.search_comics({ character: "spider-man" })
+    end
+
+    it "should call the api if character is provided" do
+      expect(api).to receive(:find_characters)
+      service.search_comics({ character: "spider-man" })
+    end
+    
+    it "should not call the api if character is empty" do
+      expect(api).to_not receive(:find_characters)
+      service.search_comics({ character: [] })
+    end
+
+    it "should not call the api if character is not provided" do
+      expect(api).to_not receive(:find_characters)
+      service.search_comics({})
+    end
+
   end
 end
