@@ -34,37 +34,59 @@ RSpec.describe "ComicsSearchService" do
       allow(api).to receive(:find_characters).and_return(characters_response)
     end
 
-    it "should call find search with a list of characters" do
-      expect(api).to receive(:find_comics).with({ characters: [1,2] })
-      service.search_comics({ character: "spider-man" })
-    end
-    
-    it "should cache the comics search request" do
-      expect(api).to receive(:find_comics).once
-      service.search_comics
-      service.search_comics
+    context "with params[:character]" do
+
+      it "should call character search with limit of 10 results" do
+        expect(api).to receive(:find_characters).with(hash_including({ limit: 10 }))
+        service.search_comics({ character: "123" })
+      end
+
+      it "should call comics search with a list of characters" do
+        expect(api).to receive(:find_comics).with(hash_including({ characters: "1,2" }))
+        service.search_comics({ character: "123" })
+      end
+
+      it "should call the api if character was found" do
+        expect(api).to receive(:find_characters)
+        expect(api).to receive(:find_comics)
+        service.search_comics({ character: "123" })
+      end
+
+      it "should cache the comics search request" do
+        expect(api).to receive(:find_characters).once
+        expect(api).to receive(:find_comics).once
+        service.search_comics({ character: "123" })
+        service.search_comics({ character: "123" })
+      end
+
+      it "should cache the characters search request" do
+        expect(api).to receive(:find_comics).once
+        expect(api).to receive(:find_characters).once
+        service.search_comics({ character: "123" })
+        service.search_comics({ character: "123" })
+      end
+      
+      it "should not call the api if character is empty" do
+        expect(api).to_not receive(:find_characters)
+        expect(api).to receive(:find_comics)
+        service.search_comics({ character: [] })
+      end
     end
 
-    it "should cache the characters search request" do
-      expect(api).to receive(:find_comics).once
-      expect(api).to receive(:find_characters).once
-      service.search_comics({ character: "spider-man" })
-      service.search_comics({ character: "spider-man" })
-    end
+    context "without params" do
 
-    it "should call the api if character is provided" do
-      expect(api).to receive(:find_characters)
-      service.search_comics({ character: "spider-man" })
-    end
-    
-    it "should not call the api if character is empty" do
-      expect(api).to_not receive(:find_characters)
-      service.search_comics({ character: [] })
-    end
+      it "should not call the api if character is not provided" do
+        expect(api).to_not receive(:find_characters)
+        expect(api).to receive(:find_comics)
+        service.search_comics({})
+      end
 
-    it "should not call the api if character is not provided" do
-      expect(api).to_not receive(:find_characters)
-      service.search_comics({})
+      it "should cache the comics search request" do
+        expect(api).to_not receive(:find_characters)
+        expect(api).to receive(:find_comics).once
+        service.search_comics
+        service.search_comics
+      end
     end
 
   end

@@ -28,14 +28,14 @@ RSpec.describe "MarvelApiAdapter" do
       it "appends the auth parameters" do
         api.find_comics
         expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
-          .with(query: auth)).to have_been_made 
+          .with(query: hash_including(auth))).to have_been_made 
       end
 
       it "appends the search params" do
-        search_params = { character: [1,2,3] }
+        search_params = { character: '1,2,3' }
         api.find_comics(search_params)
-        expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
-          .with(query: auth.merge( search_params ))).to have_been_made 
+        expect( a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
+          .with(query: hash_including(search_params))).to have_been_made 
       end
 
       it "returns the response string" do
@@ -74,14 +74,14 @@ RSpec.describe "MarvelApiAdapter" do
       it "appends the auth parameters" do
         api.find_characters
         expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/characters")
-          .with(query: auth)).to have_been_made 
+          .with(query: hash_including(auth))).to have_been_made 
       end
 
       it "appends the search params" do
-        search_params = { character: [1,2,3] }
+        search_params = { name: 'hero-name' }
         api.find_characters(search_params)
         expect(a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/characters")
-          .with(query: auth.merge( search_params ))).to have_been_made 
+          .with(query: hash_including( search_params ))).to have_been_made 
       end
 
       it "returns the response string" do
