@@ -32,12 +32,12 @@ function App () {
       <SearchForm placeHolderText={character} onSubmit={onSubmit} />
       <Container>
         <h2>Search Results</h2>
-        <Row>
+        <Row className="comics-list justify-content-center">
           {comics.map(comic => (
-            <Col key={comic.id}>
-              <h3>{comic.title}</h3>
+            <Col key={comic.id} className="comic-card p-0">
+              <h3 className="comic-title m-0 p-3">{comic.title}</h3>
               <img src={comic.thumbnail} alt={`${comic.title} cover`} />
-              <div>
+              <div className="comic-likes">
                 <span>{comic.likes}</span>
                 <button></button>
               </div>
