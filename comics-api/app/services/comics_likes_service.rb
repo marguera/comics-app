@@ -16,6 +16,12 @@ class ComicsLikesService
     Like.from_comics_ids(comics.map(&:id))
   end 
 
+  def increment_likes_count(comic_id:)
+    like = Like.find_or_initialize_by(:comic_id => comic_id)
+    like.increment!(:count) if like.persisted?
+    like.save if like.new_record?
+  end
+
   private
 
     def map_likes(likes)

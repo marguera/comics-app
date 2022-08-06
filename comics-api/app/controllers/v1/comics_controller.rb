@@ -7,6 +7,11 @@ module V1
       render json: result, status: :ok
     end
 
+    def like
+      comics_likes.increment_likes_count(comic_id: params[:id])
+      render nothing: true, status: :ok
+    end
+
     private 
 
       def comics_search
