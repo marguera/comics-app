@@ -7,7 +7,7 @@ class ComicsSearchService
   def search_comics(options={})
     if options[:character].present?
       ids = parse_characters_ids({ nameStartsWith: "#{options[:character]}", limit: 10 })
-      return parse_comics({ orderBy: '-onsaleDate', characters: ids.join(",") }) if ids.present?
+      return parse_comics({ orderBy: '-focDate', characters: ids.join(",") }) if ids.present?
       return []
     end
     parse_comics
