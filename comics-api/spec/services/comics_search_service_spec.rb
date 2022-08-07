@@ -7,6 +7,8 @@ RSpec.describe "ComicsSearchService" do
     let(:comics_response) { 
       { 
         data: {
+          offset: 424,
+          total: 3141414,
           results: [
             { id: 1, title: "title 1", thumbnail: { path: "p1", extension: "e1" } },
             { id: 2, title: "title 2", thumbnail: { path: "p1", extension: "e1" } },
