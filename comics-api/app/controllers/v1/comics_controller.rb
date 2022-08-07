@@ -8,11 +8,15 @@ module V1
     end
 
     def like
-      comics_likes.increment_likes_count(comic_id: params[:id])
+      comics_likes.increment_likes_count(current_user.id, params[:id])
       render nothing: true, status: :ok
     end
 
     private 
+
+      def current_user
+        OpenStruct.new(user_id: 12345)
+      end
 
       def comics_search
         @comics_search ||= ComicsSearchService.new

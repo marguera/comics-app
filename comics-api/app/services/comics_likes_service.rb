@@ -16,10 +16,8 @@ class ComicsLikesService
     map_likes(comics_ids, count, liked)
   end 
 
-  def increment_likes_count(comic_id:)
-    like = Like.find_or_initialize_by(:comic_id => comic_id)
-    like.increment!(:count) if like.persisted?
-    like.save if like.new_record?
+  def increment_likes_count(user_id, comic_id)
+    Like.create(user_id: user_id, comic_id: comic_id)
   end
 
   private

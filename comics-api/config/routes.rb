@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :comics do 
       member do
-        get :like
+        post :like
       end
     end
   end
