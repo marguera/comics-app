@@ -3,15 +3,17 @@ import styles from './ComicLikes.module.scss';
 
 interface ComicLikesProps {
   isLiked: boolean
+  onLikeClick?: () => void
 }
 
-export default function ComicLikes({ isLiked }: ComicLikesProps) {
+export default function ComicLikes({ isLiked = false, onLikeClick }: ComicLikesProps) {
 
   const [ userLiked, setUserLiked ] = useState<boolean>(false);
 
   const handleClick = () => {
-    if(!userLiked) {
+    if(onLikeClick && !userLiked) {
       setUserLiked(true);
+      onLikeClick();
     }
   }
 
@@ -21,7 +23,6 @@ export default function ComicLikes({ isLiked }: ComicLikesProps) {
 
   return (
     <div className="comic-likes">
-      <span>3</span>
       <button name="teste" 
         disabled={userLiked} 
         onClick={handleClick}

@@ -40,7 +40,7 @@ function App () {
             <Col key={comic.id} className="comic-card p-0">
               <h3 className="comic-title m-0 p-3">{comic.title}</h3>
               <img src={comic.thumbnail} alt={`${comic.title} cover`} />
-              <ComicLikes isLiked={false} />
+              <ComicLikes isLiked={false} onLikeClick={() => {}} />
             </Col>
           ))}
         </Row>
