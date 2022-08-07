@@ -10,6 +10,17 @@ git clone https://github.com/marguera/comics-app.git
 cd comics-app
 ```
 
+### Create the .env.development file:
+```
+touch comics-api/.env.development
+```
+
+### Inside of .env.development set your auth environment variables:
+```
+MARVEL_PUBLIC_KEY=your public key
+MARVEL_PRIVATE_KEY=your private key
+```
+
 ### Run the service (make sure the port `3000` is not being used):
 ```
 docker-compose up --build
