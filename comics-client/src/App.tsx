@@ -10,7 +10,7 @@ import './App.scss';
 
 function App () {
   const [comics, setComics] = useState<Comic[]>([]);
-  const [character, setCharacter] = useState('Search for a character...');
+  const [character, setCharacter] = useState('');
 
   const searchComics = (searchTerm: string): void => {
     getComics(searchTerm).then(response => {
@@ -30,7 +30,7 @@ function App () {
   return (
     <div className="App">
       <Header />
-      <SearchForm placeHolderText={character} onSubmit={onSubmit} />
+      <SearchForm onSubmit={onSubmit} />
       <br />
       { comics.length > 0 && <ComicsList comics={comics} /> }
     </div>

@@ -6,17 +6,18 @@ import Col from 'react-bootstrap/Col';
 import styles from './SearchForm.module.scss';
 
 interface SearchFormProps {
-  placeHolderText: string;
   onSubmit: (character: string) => void;
 }
 
 export default function SearchForm(props: SearchFormProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [placeholder, setPlaceholder] = useState('Search for a character');
 
   const onSubmit = (event: React.FormEvent) => {
+    setPlaceholder(searchTerm);
+    setSearchTerm("");
     props.onSubmit(searchTerm);
     event.preventDefault();
-    setSearchTerm("");
   };
 
   const changeSearchTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,14 +28,14 @@ export default function SearchForm(props: SearchFormProps) {
     <Container fluid as="header" className={styles.searchForm}>
       <Row className="justify-content-center p-3">
         <Col xs="auto">
-          <form className="search-form" onSubmit={onSubmit}>
+          <form name="search-form" className="search-form" onSubmit={onSubmit}>
           <input
             className={styles.searchInput}
             name="character"
             type="text"
             id="name"
             value={searchTerm}
-            placeholder={props.placeHolderText}
+            placeholder={placeholder}
             onChange={changeSearchTerm}
           />
         </form>
