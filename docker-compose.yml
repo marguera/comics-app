@@ -1,6 +1,5 @@
 version: '3'
 volumes:
-  node_modules_cache:
   gem_cache:
 services:
   nginx:
@@ -22,7 +21,6 @@ services:
     container_name: comics_client
     volumes:
       - ./comics-client:/var/app
-      - node_modules_cache:/var/app/node_modules
     ports:
       - 3100:3100
     networks:
