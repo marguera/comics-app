@@ -1,10 +1,8 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import ComicsListItem from '../ComicsListItem';
 
-import ComicLikes from '../ComicLikes';
 import { Comic } from '../../data';
-import { useEffect } from 'react';
 
 interface ComicsListParams {
   comics: Comic[];
@@ -20,15 +18,7 @@ export default function ComicsList({ comics }: ComicsListParams) {
     <Container as="ol">
       <Row as="li" className="comics-list justify-content-center">
         {comics.map((comic) => (
-          <Col key={comic.id} className="comic-card p-0">
-            <h3 className="comic-title m-0 p-3">{comic.title}</h3>
-            <img src={comic.thumbnail} alt={`${comic.title} cover`} />
-            <ComicLikes
-              likes={comic.likes}
-              isLiked={false}
-              onLikeClick={() => {}}
-            />
-          </Col>
+          <ComicsListItem key={comic.id} comic={comic} />
         ))}
       </Row>
     </Container>
