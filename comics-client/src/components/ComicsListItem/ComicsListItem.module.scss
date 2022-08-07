@@ -1,39 +1,39 @@
 .comicsListItem {
-    
-    position:relative;
-    overflow: hidden;
-    width: 212px;
-    min-width: 212px;
-    max-width: 250px !important;
-    height:386px;
-    background-color: #1b1b1b;
+      
+  position:relative;
+  overflow: hidden;
+  width: 212px;
+  min-width: 212px;
+  max-width: 250px !important;
+  height:386px;
+  background-color: #1b1b1b;
+  transition: all 0.2s ease-in-out;
+   
+  img { 
+    width: auto;
+    max-width: 100%;
+    object-fit: cover; 
+  }
+
+  .comicTitle {
+    position:absolute;
+    bottom:-100px;
+    left:0;
+    width:100%;
+    background-color: #FFF;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
     transition: all 0.2s ease-in-out;
-    
-    img { 
-        width: auto;
-        max-width: 100%;
-        object-fit: cover; 
-    }
+  }
 
-    .comicTitle {
-        position:absolute;
-        bottom:-100px;
-        left:0;
-        width:100%;
-        background-color: #FFF;
-        font-size: 14px;
-        cursor: pointer;
-        text-transform: uppercase;
-        transition: all 0.2s ease-in-out;
-    }
+  &:hover {
+    .comicTitle { 
+        bottom:0; }
+  }
 
-    &:hover {
-        .comicTitle { 
-            bottom:0; }
-    }
-
-    &.liked {
-        outline: 10px solid red;
-        outline-offset: -10px;
-    }
+  &.liked {
+    outline: 10px solid red;
+    outline-offset: -10px;
+  }
 }
