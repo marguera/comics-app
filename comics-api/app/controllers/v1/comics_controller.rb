@@ -15,7 +15,7 @@ module V1
     private 
 
       def current_user
-        OpenStruct.new(user_id: 12345)
+        OpenStruct.new(id: 12345)
       end
 
       def comics_search
