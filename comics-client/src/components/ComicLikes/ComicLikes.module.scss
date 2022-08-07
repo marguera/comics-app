@@ -1,0 +1,18 @@
+.comicLikes {
+  width: 30px;
+  height: 27px;
+  position:absolute;
+  top:12px;
+  right:12px;
+  border:0;
+  background:transparent;
+  background-position: center center;
+  background-image: url("../../images/heart_off.png");
+  
+  &:hover {
+    background-image: url("../../images/heart_hover.png");
+  }
+  &:disabled {
+    background-image: url("../../images/heart_on.png");
+  }
+}

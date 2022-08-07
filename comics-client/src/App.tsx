@@ -1,11 +1,14 @@
 import './App.scss';
 import { useState, useEffect } from 'react'
 import { getComics, Comic } from './data'
-import Header from './components/Header';
-import SearchForm from './components/SearchForm';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+import Header from './components/Header';
+import SearchForm from './components/SearchForm';
+import ComicLikes from './components/ComicLikes';
 
 function App () {
   const [comics, setComics] = useState<Comic[]>([]);
@@ -37,10 +40,7 @@ function App () {
             <Col key={comic.id} className="comic-card p-0">
               <h3 className="comic-title m-0 p-3">{comic.title}</h3>
               <img src={comic.thumbnail} alt={`${comic.title} cover`} />
-              <div className="comic-likes">
-                <span>{comic.likes}</span>
-                <button></button>
-              </div>
+              <ComicLikes isLiked={false} />
             </Col>
           ))}
         </Row>
