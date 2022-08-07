@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 
 import ComicsListItem from '../ComicsListItem';
 import Comic from '../../definitions/Comic';
+import styles from './ComicsList.module.scss';
 
 interface ComicsListParams {
   comics: Comic[];
@@ -16,7 +17,7 @@ export default function ComicsList({ comics }: ComicsListParams) {
 
   return (
     <Container as="ol">
-      <Row as="li" className="comics-list justify-content-center">
+      <Row as="li" className={`${styles.comicsList} justify-content-center`} >
         {comics.map((comic) => (
           <ComicsListItem key={comic.id} comic={comic} />
         ))}
