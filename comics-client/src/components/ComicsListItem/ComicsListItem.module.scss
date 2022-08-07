@@ -7,6 +7,7 @@
   max-width: 250px !important;
   height:386px;
   background-color: #1b1b1b;
+  box-sizing: border-box;
   transition: all 0.2s ease-in-out;
    
   img { 
@@ -24,15 +25,24 @@
     font-size: 14px;
     cursor: pointer;
     text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
+    transition: bottom 0.2s ease-in-out;
   }
 
   &:hover {
     .comicTitle { 
-        bottom:0; }
+      bottom:0;
+      border-bottom: 10px solid red; 
+    }
   }
 
-  &.liked {
+  &.liked:after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     outline: 10px solid red;
     outline-offset: -10px;
   }
