@@ -2,6 +2,6 @@ export default interface Comic {
   id: string;
   title: string;
   thumbnail: string;
-  isLiked: boolean;
+  liked: boolean;
   likes: number;
 }

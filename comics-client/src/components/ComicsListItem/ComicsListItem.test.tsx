@@ -11,7 +11,7 @@ describe("ComicsListItem", () => {
       title: "comic title 1", 
       likes: 0, 
       thumbnail: "thumbnail", 
-      isLiked: false 
+      liked: false 
     };
     render(<ComicsListItem comic={comic} />);
     expect(await screen.findByText("comic title 1")).toBeInTheDocument();

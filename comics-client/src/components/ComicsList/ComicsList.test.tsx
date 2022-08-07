@@ -11,13 +11,13 @@ describe("ComicsList", () => {
       title: "comic title 1", 
       likes: 0, 
       thumbnail: "thumbnail", 
-      isLiked: false 
+      liked: false 
     }, { 
       id: '2', 
       title: "comic title 2", 
       likes: 0, 
       thumbnail: "thumbnail", 
-      isLiked: false 
+      liked: false 
     }];
     
     render(<ComicsList comics={comics} />);

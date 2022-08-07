@@ -22,7 +22,7 @@ export default function ComicsListItem({ comic }: ComicsListItemProps) {
   };
 
   useEffect(() => {
-    setLiked(comic.isLiked);
+    setLiked(comic.liked);
   }, [])
 
   return (
@@ -31,7 +31,7 @@ export default function ComicsListItem({ comic }: ComicsListItemProps) {
       <img src={comic.thumbnail} alt={`${comic.title} cover`} />
       <ComicLikes
         likes={comic.likes}
-        isLiked={false}
+        isLiked={comic.liked}
         onLikeClick={onLikeClick} />
     </Col>
   )
