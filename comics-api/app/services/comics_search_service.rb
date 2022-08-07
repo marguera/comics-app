@@ -24,11 +24,11 @@ class ComicsSearchService
 
     def parse_comics(options={})
       result = JSON.parse(get_comics(options)).deep_symbolize_keys
-      result[:data][:results].map{ |json| Comic.from_json({ 
+      result[:data][:results].map{ |json| { 
         id:        json[:id],
         title:     json[:title],
         thumbnail: json[:thumbnail][:path] + '.' + json[:thumbnail][:extension]
-      }) }
+      } }
     end
 
     def get_characters(options={})
