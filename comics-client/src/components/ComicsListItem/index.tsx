@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 
 import ComicLikes from '../ComicLikes';
 import Comic from '../../definitions/Comic';
+import { addLike } from '../../data';
 
 import styles from './ComicsListItem.module.scss';
 
@@ -16,7 +17,7 @@ export default function ComicsListItem({ comic }: ComicsListItemProps) {
   const [liked, setLiked] = useState<boolean>(false);
 
   const onLikeClick = () => {
-    console.log('onLikeClick')
+    addLike(comic.id);
     setLiked(true);
   };
 

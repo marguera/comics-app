@@ -1,12 +1,5 @@
 import axios from 'axios';
-
-export type Comic = {
-  id: string
-  title: string
-  thumbnail: string
-  isLiked: boolean
-  likes: number
-}
+import Comic from './definitions/Comic';
 
 export type Links = {
   next?: number
@@ -26,4 +19,8 @@ export type GetComicsParams = {
 export async function getComics(params: GetComicsParams): Promise<ComicsResponse> {
   let response = await axios.get('http://localhost:3000/api/v1/comics', { params });
   return response.data;
+}
+
+export function addLike(comicId:string): void {
+  axios.post(`http://localhost:3000/api/v1/comics/${comicId}/like`);
 }

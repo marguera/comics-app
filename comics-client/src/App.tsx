@@ -7,7 +7,7 @@ import Pagination from './components/Pagination';
 
 import PagesLinks from './definitions/PagesLinks';
 import Comic from './definitions/Comic';
-import { getComics, addLike } from './data'
+import { getComics } from './data'
 
 import './App.scss';
 
