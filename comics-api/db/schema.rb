@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_04_233322) do
+ActiveRecord::Schema.define(version: 2022_08_07_050507) do
 
   create_table "likes", force: :cascade do |t|
-    t.string "comic_id"
-    t.integer "count", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["comic_id"], name: "index_likes_on_comic_id"
+    t.integer "user_id"
+    t.integer "comic_id"
+    t.index ["user_id", "comic_id"], name: "index_likes_on_user_id_and_comic_id", unique: true
   end
 
 end

@@ -1,13 +1,14 @@
 class ComicsLikesService
   
   def enhance_comics_with_likes(comics, likes)
-    likes = map_likes(likes)
+    puts comics.inspect
+    puts likes.inspect
     comics.map do |comic| 
       Comic.from_json({ 
         id: comic.id,
         title: comic.title,
         thumbnail: comic.thumbnail,
-        likes: likes[comic.id.to_s] || 0
+        likes: likes[comic.id] || 0
       })
     end
   end
