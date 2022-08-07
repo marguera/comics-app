@@ -1,7 +1,7 @@
 .comicLikes {
   position:absolute;
-  top:12px;
-  right:12px;
+  top:20px;
+  right:20px;
 
   span {
     color: #FFF;
@@ -17,6 +17,7 @@
     width: 30px;
     height: 27px;
     border:0;
+    transition: all 0.2s ease-in-out;
     background:transparent;
     background-position: center center;
     background-image: url("../../images/heart_off.png");
