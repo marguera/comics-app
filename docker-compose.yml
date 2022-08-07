@@ -21,8 +21,8 @@ services:
     container_name: comics_client
     volumes:
       - ./comics-client:/var/app
-    ports:
-      - 3100:3100
+    expose:
+      - "3100"
     networks:
       - internal
     environment:
@@ -38,8 +38,8 @@ services:
     volumes:
       - ./comics-api:/var/app
       - gem_cache:/usr/local/bundle/gems
-    ports:
-      - 3200:3200
+    expose:
+      - "3200"
     networks:
       - internal
     stdin_open: true
