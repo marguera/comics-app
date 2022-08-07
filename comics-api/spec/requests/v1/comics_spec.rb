@@ -60,4 +60,24 @@ RSpec.describe "Comics", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
+  
+  it 'add like and returns liked' do
+
+    Like.delete_all
+    
+    get '/v1/comics'
+    expect(response).to have_http_status(:success)
+    expect(response.content_type).to eq("application/json; charset=utf-8")
+    json = JSON.parse(response.body)
+    expect(json['results'][0]['liked']).to eq(false)
+
+    post "/v1/comics/#{json['results'][0]['id']}/like"
+    expect(response).to have_http_status(:success)
+
+    get '/v1/comics'
+    expect(response).to have_http_status(:success)
+    expect(response.content_type).to eq("application/json; charset=utf-8")
+    json = JSON.parse(response.body)
+    expect(json['results'][0]['liked']).to eq(true)
+  end
 end
