@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      color: #d82927;
+      background-color: #fff;  
+      font-weight: bold;
+      text-transform: uppercase;
+      width: 200px;
+      height: 40px;
+
+      &:disabled {
+        border: 1px solid #868686;
+        background-color: #2b2b2b;
+        color: #868686;
+      }
+    }
+}

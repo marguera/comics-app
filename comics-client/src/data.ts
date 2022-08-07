@@ -18,8 +18,12 @@ export type ComicsResponse = {
   results: Comic[]
 }
 
-export async function getComics(character: string): Promise<ComicsResponse> {
-  let params = { params: { character: character }};
-  let response = await axios.get('http://localhost:3000/api/v1/comics', params);
+export type GetComicsParams = {
+  character: string,
+  page?: number,
+}
+
+export async function getComics(params: GetComicsParams): Promise<ComicsResponse> {
+  let response = await axios.get('http://localhost:3000/api/v1/comics', { params });
   return response.data;
 }
