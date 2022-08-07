@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import MarvelLogo from '../images/marvel_logo.png';
+import MarvelLogo from '../../images/marvel_logo.png';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import styles from './Header.module.scss';
