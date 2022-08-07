@@ -14,7 +14,7 @@ function App () {
 
   const searchComics = (searchTerm: string): void => {
     getComics(searchTerm).then(response => {
-      setComics(response);
+      setComics(response.results);
     });
   };
 

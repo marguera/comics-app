@@ -1,13 +1,25 @@
-export async function getComics(character: string): Promise<Comic[]> {
-  console.log('Fetching comics for ' + character);
-  const response = await fetch(`/api/v1/comics?character=${character}`);
-  return await response.json() as Comic[];
-}
+import axios from 'axios';
 
 export type Comic = {
-    id: string
-    title: string
-    thumbnail: string
-    isLiked: boolean
-    likes: number
+  id: string
+  title: string
+  thumbnail: string
+  isLiked: boolean
+  likes: number
+}
+
+export type Links = {
+  next?: number
+  prev?: number
+}
+
+export type ComicsResponse = {
+  _links: Links
+  results: Comic[]
+}
+
+export async function getComics(character: string): Promise<ComicsResponse> {
+  let params = { params: { character: character }};
+  let response = await axios.get('http://localhost:3000/api/v1/comics', params);
+  return response.data;
 }
