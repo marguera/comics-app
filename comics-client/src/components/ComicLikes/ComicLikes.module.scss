@@ -1,18 +1,31 @@
 .comicLikes {
-  width: 30px;
-  height: 27px;
   position:absolute;
   top:12px;
   right:12px;
-  border:0;
-  background:transparent;
-  background-position: center center;
-  background-image: url("../../images/heart_off.png");
-  
-  &:hover {
-    background-image: url("../../images/heart_hover.png");
+
+  span {
+    color: #FFF;
+    font-size:20px;
+    weight: 700;
+    line-height:27px;
+    vertical-align: top;
+    margin-right:10px;
   }
-  &:disabled {
-    background-image: url("../../images/heart_on.png");
+
+  button {
+    display:inline-block;
+    width: 30px;
+    height: 27px;
+    border:0;
+    background:transparent;
+    background-position: center center;
+    background-image: url("../../images/heart_off.png");
+    
+    &:hover {
+      background-image: url("../../images/heart_hover.png");
+    }
+    &:disabled {
+      background-image: url("../../images/heart_on.png");
+    }
   }
 }
