@@ -25,7 +25,7 @@ export default function SearchForm(props: SearchFormProps) {
   };
 
   return (
-    <Container fluid as="header" className={styles.searchForm}>
+    <Container fluid className={styles.searchForm}>
       <Row className="justify-content-center p-3">
         <Col xs="auto">
           <form name="search-form" className="search-form" onSubmit={onSubmit}>
