@@ -35,10 +35,10 @@ http://localhost:3000
 
 ### Rails
 ```
-docker-compose run --rm comics-api rspec -fd
+docker-compose run --rm comics-api rspec
 ```
 
 ### React
 ```
-TODO
+docker-compose run --rm comics-client npm test
 ```
