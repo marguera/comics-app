@@ -1,8 +1,8 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import ComicsListItem from '../ComicsListItem';
 
-import { Comic } from '../../data';
+import ComicsListItem from '../ComicsListItem';
+import Comic from '../../definitions/Comic';
 
 interface ComicsListParams {
   comics: Comic[];

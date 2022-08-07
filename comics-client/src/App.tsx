@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { render } from '@testing-library/react';
 
 import Header from './components/Header';
 import SearchForm from './components/SearchForm';
@@ -7,7 +6,8 @@ import ComicsList from './components/ComicsList';
 import Pagination from './components/Pagination';
 
 import PagesLinks from './definitions/PagesLinks';
-import { getComics, Comic } from './data'
+import Comic from './definitions/Comic';
+import { getComics, addLike } from './data'
 
 import './App.scss';
 
@@ -23,9 +23,9 @@ function App () {
     setPage(1);
   };
 
-  const onPageChange = (page: number) => {
+  const onPageChange = (newPage: number) => {
     setPagesLinks({});
-    setPage(page);
+    setPage(newPage);
   };
 
   useEffect(() => {
@@ -41,7 +41,9 @@ function App () {
       <SearchForm onSubmit={onSubmit} />
       <br />
       { comics.length > 0 && <ComicsList comics={comics} /> }
-      <Pagination links={pagesLinks} onPageChange={onPageChange} />
+      <Pagination 
+        links={pagesLinks} 
+        onPageChange={onPageChange} />
     </div>
   )
 }

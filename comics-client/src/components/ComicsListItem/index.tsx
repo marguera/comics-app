@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import Col from 'react-bootstrap/Col';
-import ComicLikes from '../ComicLikes';
-import styles from './ComicsListItem.module.scss';
 
-import { Comic } from '../../data';
+import Col from 'react-bootstrap/Col';
+
+import ComicLikes from '../ComicLikes';
+import Comic from '../../definitions/Comic';
+
+import styles from './ComicsListItem.module.scss';
 
 interface ComicsListItemProps {
     comic: Comic;

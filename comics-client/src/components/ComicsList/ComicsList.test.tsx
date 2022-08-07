@@ -1,7 +1,7 @@
 import React from "react";
 import ComicsList from "./index";
 import { render, screen } from "@testing-library/react";
-import { Comic } from "../../data";
+import Comic from "../../definitions/Comic";
 
 describe("ComicsList", () => {
 
