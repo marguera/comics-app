@@ -6,8 +6,8 @@ class ComicsSearchService
 
   def search_comics(options={})
     if options[:character].present?
-      ids = parse_characters_ids({ nameStartsWith: "#{options[:character]}", limit: 10 })
-      return parse_comics({ orderBy: '-focDate', characters: ids.join(",") }) if ids.present?
+      ids = parse_characters_ids(character_query(options))
+      return parse_comics(comics_query(options).merge({ characters: ids.join(",") })) if ids.present?
       return []
     end
     parse_comics
@@ -41,5 +41,13 @@ class ComicsSearchService
     def parse_characters_ids(options={})
       result = JSON.parse(get_characters(options)).deep_symbolize_keys
       result[:data][:results].map{ |character| character[:id] }
+    end
+
+    def character_query(options={})
+      { nameStartsWith: "#{options[:character]}", limit: 10 }
+    end
+
+    def comics_query(options={})
+      { orderBy: '-focDate'  }
     end
 end
