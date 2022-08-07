@@ -1,6 +1,7 @@
 version: '3'
 volumes:
   gem_cache:
+  node_modules_cache:
 services:
   nginx:
     depends_on:
@@ -21,6 +22,7 @@ services:
     container_name: comics_client
     volumes:
       - ./comics-client:/var/app
+      - node_modules_cache:/var/app/node_modules
     expose:
       - "3100"
     networks:
@@ -28,6 +30,7 @@ services:
     environment:
       PORT: 3100
     stdin_open: true
+    entrypoint: /usr/local/bin/docker-entrypoint.sh
     command: ['npm', 'run', 'start']
 
   comics-api:
