@@ -1,5 +1,7 @@
 class ComicsSearchService
   
+  RPP = 20
+
   def initialize(marvel_api: MarvelApiAdapter.new)
     @marvel_api = marvel_api
   end
@@ -7,10 +9,10 @@ class ComicsSearchService
   def search_comics(options={})
     if options[:character].present?
       ids = parse_characters_ids(character_query(options))
-      return parse_comics(comics_query(options).merge({ characters: ids.join(",") })) if ids.present?
+      return parse_results(comics_query(options).merge({ characters: ids.join(",") })) if ids.present?
       return []
     end
-    parse_comics
+    parse_results
   end
   
   private
@@ -22,7 +24,7 @@ class ComicsSearchService
       end
     end
 
-    def parse_comics(options={})
+    def parse_results(options={})
       result = JSON.parse(get_comics(options)).deep_symbolize_keys
       result[:data][:results].map{ |json| { 
         id:        json[:id],
@@ -48,6 +50,8 @@ class ComicsSearchService
     end
 
     def comics_query(options={})
-      { orderBy: '-focDate'  }
+      { orderBy: '-focDate', 
+        limit:   RPP, 
+        offset:  [options[:page].to_i || 1].max * RPP }
     end
 end

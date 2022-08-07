@@ -32,7 +32,7 @@ RSpec.describe "MarvelApiAdapter" do
       end
 
       it "appends the search params" do
-        search_params = { character: '1,2,3' }
+        search_params = { character: '1,2,3', offset: '1331' }
         api.find_comics(search_params)
         expect( a_request(:get, "#{MarvelApiAdapter::ENDPOINT}/comics")
           .with(query: hash_including(search_params))).to have_been_made 

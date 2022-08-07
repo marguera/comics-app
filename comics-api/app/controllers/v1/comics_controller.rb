@@ -27,7 +27,7 @@ module V1
       end
 
       def search_params
-        params.permit(:character)
+        params.permit(:character, :page)
       end
   end
 end
