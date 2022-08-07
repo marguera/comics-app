@@ -40,10 +40,14 @@ function App () {
       <Header />
       <SearchForm onSubmit={onSubmit} />
       <br />
-      { comics.length > 0 && <ComicsList comics={comics} /> }
-      <Pagination 
-        links={pagesLinks} 
-        onPageChange={onPageChange} />
+      { comics.length > 0 && (
+        <>
+          <ComicsList comics={comics} />
+          <Pagination 
+            links={pagesLinks} 
+            onPageChange={onPageChange} />
+        </>
+      )}
     </div>
   )
 }
